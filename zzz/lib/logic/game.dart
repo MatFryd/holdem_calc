@@ -21,23 +21,23 @@ class Game {
     int i, j, k, m, n;
 
     // Run through all possible 5-card boards
-    for (i = 0; i < deckSize - 4; i++)
-      for (j = i + 1; j < deckSize - 3; j++)
-        for (k = j + 1; k < deckSize - 2; k++)
-          for (m = k + 1; m < deckSize - 1; m++)
+    for (i = 0; i < deckSize - 4; i++) {
+      board[0] = deck[i];
+      for (j = i + 1; j < deckSize - 3; j++) {
+        board[1] = deck[j];
+        for (k = j + 1; k < deckSize - 2; k++) {
+          board[2] = deck[k];
+          for (m = k + 1; m < deckSize - 1; m++) {
+            board[3] = deck[m];
             for (n = m + 1; n < deckSize; n++) {
-              trials++;
-
-              board[0] = deck[i];
-              board[1] = deck[j];
-              board[2] = deck[k];
-              board[3] = deck[m];
               board[4] = deck[n];
+
+              trials++;
 
               // Player 1 hole cards
               board[5] = serials[0];
               board[6] = serials[1];
-              p1BestScore = Scoring.bestScore(List<int>.from(board));
+              p1BestScore = Scoring.bestScore(board);
 
               // Player 2 hole cards
               board[5] = serials[2];
@@ -51,8 +51,12 @@ class Game {
               else
                 p2wins++;
             }
+          }
+        }
+      }
+    }
 
-    print('\np1wins: ${(100 * p1wins / trials).toStringAsFixed(2)}\n'
+    print('p1wins: ${(100 * p1wins / trials).toStringAsFixed(2)}\n'
         'p2wins: ${(100 * p2wins / trials).toStringAsFixed(2)}\n'
         'splits: ${(100 * splits / trials).toStringAsFixed(2)}');
 

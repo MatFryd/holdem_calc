@@ -105,12 +105,12 @@ class Scoring {
   /// Sorts the list by rank.
   static int bestScore(List<int> cards) {
     int maxScore = 0, currScore = 0;
-    List<int> currHand = List<int>.filled(5, 0);
+    List<int> currHand = List<int>.filled(5, 0), cardsCopy = List<int>.from(cards);
     List<List<int>> indexSets = cards.length == 8 ? eightIndices : sevenIndices;
 
-    cards.sort((a, b) => a % 13 - b % 13); // Sort by rank
+    cardsCopy.sort((a, b) => a % 13 - b % 13); // Sort by rank
     for (List<int> indices in indexSets) {
-      for (int i = 0; i < 5; i++) currHand[i] = cards[indices[i]];
+      for (int i = 0; i < 5; i++) currHand[i] = cardsCopy[indices[i]];
       if ((currScore = score(currHand)) > maxScore) maxScore = currScore;
     }
     return maxScore;
